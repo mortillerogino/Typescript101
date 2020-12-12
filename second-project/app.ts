@@ -1,15 +1,23 @@
-function add(n1: number, n2: number, showResult: boolean, phrase: string) {
-    const result = n1 + n2;
-    if (showResult) {
-        console.log(phrase + result);
-    } else {
-        return result;
-    }
+enum Role {
+    ADMIN,
+    READ_ONLY,
+    AUTHOR
 }
 
-const number1 = 5;
-const number2 = 2.8;
-const printResult = true;
-const resultPhrase = "Result is: ";
+const person = {
+    name: 'Gino',
+    age: 34,
+    hobbies: ['Sports', 'Cooking'],
+    role: Role.READ_ONLY
+};
 
-const result = add(number1, number2, printResult, resultPhrase);
+let favoriteActivities: string[];
+favoriteActivities = ['Sports'];
+
+console.log(person);
+
+for (const hobby of person.hobbies) {
+    console.log(hobby.toUpperCase());
+}
+
+console.log(person.role);
