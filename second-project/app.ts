@@ -1,23 +1,14 @@
-enum Role {
-    ADMIN,
-    READ_ONLY,
-    AUTHOR
+let userInput: unknown;
+let userName: string;
+
+userInput = 5;
+userInput = 'Max';
+if (typeof userInput === 'string') {
+    userName = userInput;
 }
 
-const person = {
-    name: 'Gino',
-    age: 34,
-    hobbies: ['Sports', 'Cooking'],
-    role: Role.READ_ONLY
-};
-
-let favoriteActivities: string[];
-favoriteActivities = ['Sports'];
-
-console.log(person);
-
-for (const hobby of person.hobbies) {
-    console.log(hobby.toUpperCase());
+function generateError(message: string, code: number): never {
+    throw { message: message, errorCode: code };
 }
 
-console.log(person.role);
+generateError('An error occured!', 500);
