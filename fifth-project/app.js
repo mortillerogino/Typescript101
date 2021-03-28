@@ -59,7 +59,7 @@ var ProjectState = /** @class */ (function (_super) {
         return this.instance;
     };
     ProjectState.prototype.addProject = function (title, description, numOfPeople) {
-        var newProject = new Project(Math.random.toString(), title, description, numOfPeople, ProjectStatus.Active);
+        var newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
         for (var _i = 0, _a = this.listeners; _i < _a.length; _i++) {
             var listenerFn = _a[_i];
@@ -191,7 +191,8 @@ var ProjectItem = /** @class */ (function (_super) {
         configurable: true
     });
     ProjectItem.prototype.dragStartHandler = function (event) {
-        console.log(event);
+        event.dataTransfer.setData('text/plain', this.project.id);
+        event.dataTransfer.effectAllowed = 'move';
     };
     ProjectItem.prototype.dragEndHandler = function (event) {
         console.log("Drag End");
@@ -222,11 +223,16 @@ var ProjectList = /** @class */ (function (_super) {
         _this.renderContent();
         return _this;
     }
-    ProjectList.prototype.dragOverHandler = function (_) {
-        var listEl = this.element.querySelector('ul');
-        listEl.classList.add('droppable');
+    ProjectList.prototype.dragOverHandler = function (event) {
+        if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+            event.preventDefault();
+            var listEl = this.element.querySelector('ul');
+            listEl.classList.add('droppable');
+        }
     };
-    ProjectList.prototype.dropHandler = function (_) { };
+    ProjectList.prototype.dropHandler = function (event) {
+        console.log(event.dataTransfer.getData('text/plain'));
+    };
     ProjectList.prototype.dragLeaveHandler = function (_) {
         var listEl = this.element.querySelector('ul');
         listEl.classList.remove('droppable');
