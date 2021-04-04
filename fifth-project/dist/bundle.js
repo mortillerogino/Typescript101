@@ -84,7 +84,11 @@ var App;
         };
         return ProjectState;
     }(State));
-    var projectState = ProjectState.getInstance();
+    App.ProjectState = ProjectState;
+    App.projectState = ProjectState.getInstance();
+})(App || (App = {}));
+var App;
+(function (App) {
     function validate(validatableInput) {
         var isValid = true;
         if (validatableInput.required)
@@ -176,7 +180,7 @@ var App;
             var userInput = this.gatherUserInput();
             if (Array.isArray(userInput)) {
                 var title = userInput[0], desc = userInput[1], people = userInput[2];
-                projectState.addProject(title, desc, people);
+                App.projectState.addProject(title, desc, people);
                 this.clearInputs();
             }
         };
@@ -248,7 +252,7 @@ var App;
         };
         ProjectList.prototype.dropHandler = function (event) {
             var projId = event.dataTransfer.getData('text/plain');
-            projectState.moveProject(projId, this.type === 'active' ? App.ProjectStatus.Active : App.ProjectStatus.Finished);
+            App.projectState.moveProject(projId, this.type === 'active' ? App.ProjectStatus.Active : App.ProjectStatus.Finished);
         };
         ProjectList.prototype.dragLeaveHandler = function (_) {
             var listEl = this.element.querySelector('ul');
@@ -259,7 +263,7 @@ var App;
             this.element.addEventListener('dragover', this.dragOverHandler);
             this.element.addEventListener('dragleave', this.dragLeaveHandler);
             this.element.addEventListener('drop', this.dropHandler);
-            projectState.addListener(function (projects) {
+            App.projectState.addListener(function (projects) {
                 var relevantProject = projects.filter(function (prj) {
                     if (_this.type === 'active')
                         return prj.status === App.ProjectStatus.Active;
